@@ -1,0 +1,9 @@
+cryptography
+pyscard
+Pillow
+python-dotenv
+channels
+nfcpy
+Django
+djangorestframework
+python-dateutil

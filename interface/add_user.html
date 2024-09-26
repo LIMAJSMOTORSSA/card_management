@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajouter Utilisateur - Gestion des cartes NFC</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      background-color: #f0f2f5;
+    }
+    .sidebar {
+      background-color: #343a40;
+      color: white;
+      min-height: 100vh;
+      position: fixed;
+      transition: all 0.3s ease;
+    }
+    .sidebar.collapsed {
+      width: 80px;
+    }
+    .sidebar .nav-link {
+      color: white;
+      font-size: 18px;
+      padding: 15px;
+    }
+    .sidebar .nav-link i {
+      margin-right: 10px;
+    }
+    .sidebar.collapsed .nav-link i {
+      margin-right: 0;
+    }
+    .sidebar.collapsed .nav-link span {
+      display: none;
+    }
+    .content {
+      margin-left: 250px;
+      transition: margin-left 0.3s ease;
+    }
+    .content.collapsed {
+      margin-left: 80px;
+    }
+    .container-form {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+      margin-top: 50px;
+    }
+    .form-title {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+    .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+    }
+    .form-section {
+      margin-bottom: 20px;
+    }
+    .submit-btn {
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      border-radius: 50px;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      border: none;
+    }
+    .submit-btn:hover {
+      background-color: #0056b3;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
+    }
+    .toggle-btn {
+      background-color: #343a40;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      transition: left 0.3s ease;
+    }
+    .toggle-btn.collapsed {
+      left: 90px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar p-3" id="sidebar">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link" href="home.html"><i class="fas fa-home"></i><span> Home</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fas fa-flask"></i><span> Test</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="#"><i class="fas fa-user-plus"></i><span> Ajouter User</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fas fa-database"></i><span> Database</span></a>
+      </li>
+      <!-- Bouton Logout -->
+      <li class="nav-item mt-auto">
+        <a class="nav-link" href="logout.html">
+          <i class="fas fa-sign-out-alt"></i><span> Logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Toggle Button -->
+  <button class="toggle-btn" id="toggle-btn">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Main Content -->
+  <div class="content p-4" id="content">
+    <div class="container">
+      <div class="container-form">
+        <h2 class="form-title">Ajouter un Utilisateur</h2>
+        <form>
+          <!-- Email -->
+          <div class="form-section">
+            <label for="email" class="form-label">Adresse email</label>
+            <input type="email" class="form-control" id="email" placeholder="Entrez l'email" required>
+          </div>
+
+          <!-- First Name and Last Name -->
+          <div class="form-section row">
+            <div class="col-md-6">
+              <label for="first_name" class="form-label">Prénom</label>
+              <input type="text" class="form-control" id="first_name" placeholder="Entrez le prénom" required>
+            </div>
+            <div class="col-md-6">
+              <label for="last_name" class="form-label">Nom de famille</label>
+              <input type="text" class="form-control" id="last_name" placeholder="Entrez le nom de famille" required>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-section">
+            <label for="password" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="password" placeholder="Entrez un mot de passe sécurisé" required>
+          </div>
+
+          <!-- Role -->
+          <div class="form-section">
+            <label for="role" class="form-label">Rôle</label>
+            <select class="form-control" id="role" required>
+              <option value="passenger">Passenger</option>
+              <option value="receptionist">Receptionist</option>
+              <option value="driver">Driver</option>
+              <option value="administrator">Administrator</option>
+            </select>
+          </div>
+
+          <!-- Account Status -->
+          <div class="form-section">
+            <label for="account_status" class="form-label">Statut du compte</label>
+            <select class="form-control" id="account_status" required>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="suspended">Suspended</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+
+          <!-- Sex -->
+          <div class="form-section">
+            <label for="sex" class="form-label">Sexe</label>
+            <select class="form-control" id="sex">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <!-- Date of Birth -->
+          <div class="form-section">
+            <label for="dob" class="form-label">Date de naissance</label>
+            <input type="date" class="form-control" id="dob">
+          </div>
+
+          <!-- Address -->
+          <div class="form-section">
+            <label for="address" class="form-label">Adresse</label>
+            <input type="text" class="form-control" id="address" placeholder="Entrez l'adresse">
+          </div>
+
+          <!-- Telephone -->
+          <div class="form-section">
+            <label for="telephone" class="form-label">Téléphone</label>
+            <input type="text" class="form-control" id="telephone" placeholder="Entrez le numéro de téléphone">
+          </div>
+
+          <!-- Profile Picture -->
+          <div class="form-section">
+            <label for="profile_picture" class="form-label">Photo de profil</label>
+            <input type="file" class="form-control" id="profile_picture">
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-section text-center">
+            <button type="submit" class="submit-btn">Ajouter l'utilisateur</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Gestion du toggle du menu latéral
+    const toggleBtn = document.getElementById('toggle-btn');
+    const sidebar = document.getElementById('sidebar');
+    const content = document.getElementById('content');
+
+    toggleBtn.addEventListener('click', function () {
+      sidebar.classList.toggle('collapsed');
+      content.classList.toggle('collapsed');
+      toggleBtn.classList.toggle('collapsed');
+    });
+  </script>
+</body>
+</html>

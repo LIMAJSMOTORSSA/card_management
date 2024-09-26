@@ -1,0 +1,455 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Updated Driver Dashboard" name="description"/>
+    <title>Home</title>
+    <!-- Favicon links -->
+<!-- Favicon et icônes -->
+    <link href="{% static 'favicon/apple-icon-57x57.png' %}" rel="apple-touch-icon" sizes="57x57"/>
+    <link href="{% static 'favicon/apple-icon-60x60.png' %}" rel="apple-touch-icon" sizes="60x60"/>
+    <link href="{% static 'favicon/apple-icon-72x72.png' %}" rel="apple-touch-icon" sizes="72x72"/>
+    <link href="{% static 'favicon/apple-icon-76x76.png' %}" rel="apple-touch-icon" sizes="76x76"/>
+    <link href="{% static 'favicon/apple-icon-114x114.png' %}" rel="apple-touch-icon" sizes="114x114"/>
+    <link href="{% static 'favicon/apple-icon-120x120.png' %}" rel="apple-touch-icon" sizes="120x120"/>
+    <link href="{% static 'favicon/apple-icon-144x144.png' %}" rel="apple-touch-icon" sizes="144x144"/>
+    <link href="{% static 'favicon/apple-icon-152x152.png' %}" rel="apple-touch-icon" sizes="152x152"/>
+    <link href="{% static 'favicon/apple-icon-180x180.png' %}" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="{% static 'favicon/android-icon-192x192.png' %}" rel="icon" sizes="192x192" type="image/png"/>
+    <link href="{% static 'favicon/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="{% static 'favicon/favicon-96x96.png' %}" rel="icon" sizes="96x96" type="image/png"/>
+    <link href="{% static 'favicon/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="{% static 'favicon/manifest.json' %}" rel="manifest"/>
+
+    <!-- Métadonnées -->
+    <meta content="#ffffff" name="msapplication-TileColor"/>
+    <meta content="{% static 'favicon/ms-icon-144x144.png' %}" name="msapplication-TileImage"/>
+    <meta content="#ffffff" name="theme-color"/>
+
+    <!-- Styles externes -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+    <!-- Styles internes -->
+    <link href="{% static 'css/lij.css' %}" rel="stylesheet"/>
+
+    <style>
+        .navbar-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .navbar-brand img {
+            height: 40px;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 250px; /* Adjust based on your sidebar width */
+            padding: 20px;
+            padding-top: 80px; /* Ajout d'espace supplémentaire en haut */
+        }
+        .footer {
+            padding: 20px 0;
+            background-color: #f8f9fa;
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .navbar {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .status-card {
+            background: white;
+            border-radius: 10px; /* Réduction du border-radius pour un aspect plus rectangulaire */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px 20px; /* Ajustement du padding pour un aspect plus rectangulaire */
+            margin-bottom: 30px;
+            text-align: center;
+            max-width: 500px; /* Limitation de la largeur maximale */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .status-card h5 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .status-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .metrics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .metric-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        .metric-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .metric-title {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .metric-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+            .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: #343a40;
+            transition: width 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
+        }
+
+        .sidebar-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .sidebar-content::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        .sidebar-content::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Styles pour le bouton Dashboard */
+        .dashboard-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
+        }
+
+        .dashboard-button i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .dashboard-button:hover {
+            background-color: #0056b3;
+            text-decoration: none;
+        }
+
+        .dashboard-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Centrer le bouton */
+        .dashboard-button-container {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+
+        
+    </style>
+</head>
+<body>
+    <!-- Updated Side Menu -->
+    <nav class="sidebar bg-dark text-light d-flex flex-column p-3">
+        <button class="btn btn-outline-light mb-3" id="menu-toggle"><i class="fas fa-bars"></i></button>
+        <div class="sidebar-content">
+            <ul class="nav flex-column mt-4">
+            <li class="nav-item">
+                <a class="nav-link text-light" href="{% url 'home' %}">
+                    <i class="fas fa-home"></i><span class="menu-text"> Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a aria-expanded="false" class="nav-link text-light" data-bs-target="#testSubmenu" data-bs-toggle="collapse" href="#">
+                    <i class="fas fa-vial"></i><span class="menu-text"> Test</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
+                </a>
+                <ul class="collapse nav flex-column ms-3" id="testSubmenu">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'test_ecriture' %}">
+                            <i class="fas fa-pen"></i><span class="menu-text"> Test Écriture</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'test_lecture' %}">
+                            <i class="fas fa-book-reader"></i><span class="menu-text"> Test Lecture</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'test_transaction' %}">
+                            <i class="fas fa-exchange-alt"></i><span class="menu-text"> Test Transaction</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="{% url 'add_user' %}">
+                    <i class="fas fa-user-plus"></i><span class="menu-text"> Add User</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a aria-expanded="false" class="nav-link text-light" data-bs-target="#scanSubmenu" data-bs-toggle="collapse" href="#">
+                    <i class="fas fa-qrcode"></i><span class="menu-text"> Scan</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
+                </a>
+                <ul class="collapse nav flex-column ms-3" id="scanSubmenu">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'qr_code' %}">
+                            <i class="fas fa-qrcode"></i><span class="menu-text"> QR Code</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'nfc' %}">
+                            <i class="fas fa-wifi"></i><span class="menu-text"> NFC</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+           
+        </ul>
+        
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Updated Top Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button class="btn btn-outline-secondary d-lg-none" id="menu-toggle-top">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <!-- App Logo -->
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'img/logo.png' %}" alt="Logo" />
+                </a>
+                <div class="ms-auto">
+                    <div class="dropdown">
+                        <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileDropdown" role="button">
+                            <i class="fas fa-user-circle"></i>
+                        </a>
+                        <ul aria-labelledby="profileDropdown" class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <!-- Updated Content -->
+        
+        
+        <div class="status-card">
+            <h5>Statut du lecteur NFC</h5>
+            <div id="nfcStatus">
+                <i class="fas fa-spinner fa-spin status-icon text-warning"></i>
+                <p>Vérification du statut du lecteur NFC...</p>
+            </div>
+            <div id="cardStatus" class="mt-3">
+                <p>Vérification de la présence d'une carte...</p>
+            </div>
+        </div>
+         
+        
+        <!-- Updated Key Metrics -->
+        <div class="metrics-container">
+            <div class="metric-card">
+                <i class="fas fa-users metric-icon text-primary"></i>
+                <h5 class="metric-title">Clients</h5>
+                <p class="metric-value" id="clientCount">{{ stats.total_clients }}</p>
+            </div>
+            <div class="metric-card">
+                <i class="fas fa-dollar-sign metric-icon text-success"></i>
+                <h5 class="metric-title">Revenus des abonnements</h5>
+                <p class="metric-value" id="revenueCount">{{ stats.subscription_revenue }}G</p>
+            </div>
+            <div class="metric-card">
+                <i class="fas fa-credit-card metric-icon text-info"></i>
+                <h5 class="metric-title">Cartes non assignées</h5>
+                <p class="metric-value" id="unassignedCards">{{ stats.unassigned_cards }}</p>
+            </div>
+            <div class="metric-card">
+                <i class="fas fa-exchange-alt metric-icon text-warning"></i>
+                <h5 class="metric-title">Transactions aujourd'hui</h5>
+                <p class="metric-value" id="todayTransactions">{{ stats.today_transactions }}</p>
+            </div>
+        </div>
+
+        <div class="dashboard-button-container">
+            <a href="{% url 'admin:index' %}" class="dashboard-button">
+                <i class="fas fa-database"></i>
+                Gestion de la Base de Données
+            </a>
+        </div>
+        
+        <div class="dashboard-button-container">
+            <a href="{% url 'search_usersub' %}" class="dashboard-button">
+                <i class="fas fa-plus-circle"></i>
+                Add Subscription
+            </a>
+        </div>
+        
+        <div class="dashboard-button-container text-center mt-4">
+            <a href="{% url 'user_search_page' %}" class="btn btn-primary dashboard-button">
+                <i class="fas fa-id-card"></i> 
+                Attribuer une Carte
+            </a>
+        </div>
+        
+        <div class="dashboard-button-container text-center mt-4">
+            <a href="{% url 'send_database' %}" class="btn btn-primary dashboard-button">
+                <i class="fas fa-copy"></i>
+                Copier la Base de Données
+            </a>
+        </div>
+        
+    </div>
+    <!-- Footer -->
+    <footer class="footer text-center mt-auto">
+        <div class="container">
+            <p class="mb-0">© 2024 LIMAJS MOTORS SA. Tous droits réservés.</p>
+            <p class="mb-0">Powered by Busko</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/lij.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateNFCStatus() {
+                fetch('/api/nfc-status/')
+                    .then(response => response.json())
+                    .then(data => {
+                        const statusElement = document.getElementById('nfcStatus');
+                        const cardStatusElement = document.getElementById('cardStatus');
+                        
+                        if (data.status === 'connected') {
+                            statusElement.innerHTML = `
+                                <i class="fas fa-check-circle status-icon text-success"></i>
+                                <p>Lecteur NFC connecté: ${data.name}</p>
+                            `;
+                            
+                            if (data.card_present) {
+                                cardStatusElement.innerHTML = '<p class="text-success">Carte NFC détectée</p>';
+                            } else {
+                                cardStatusElement.innerHTML = '<p>Aucune carte NFC détectée</p>';
+                            }
+                        } else {
+                            statusElement.innerHTML = `
+                                <i class="fas fa-exclamation-triangle status-icon text-warning"></i>
+                                <p>Lecteur NFC non connecté</p>
+                            `;
+                            cardStatusElement.innerHTML = '<p>Aucune carte NFC détectée</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la vérification du statut NFC:', error);
+                    });
+            }
+    
+            function updateDashboardStats() {
+                fetch('/api/dashboard-stats/')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('clientCount').textContent = data.total_clients;
+                        document.getElementById('revenueCount').textContent = data.total_revenue.toFixed(2) + '€';
+                        document.getElementById('unassignedCards').textContent = data.unassigned_cards;
+                        document.getElementById('todayTransactions').textContent = data.today_transactions;
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la mise à jour des statistiques:', error);
+                    });
+            }
+    
+            // Fonction pour animer les compteurs
+            function animateCounter(elementId, targetValue, duration = 2000, prefix = '', suffix = '') {
+                let startTimestamp = null;
+                const element = document.getElementById(elementId);
+                const startValue = parseInt(element.textContent.replace(/[^0-9]/g, ''));
+    
+                function step(timestamp) {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const currentValue = Math.floor(progress * (targetValue - startValue) + startValue);
+                    element.textContent = `${prefix}${currentValue.toLocaleString()}${suffix}`;
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                }
+    
+                window.requestAnimationFrame(step);
+            }
+    
+            // Fonction pour mettre à jour et animer toutes les statistiques
+            function updateAndAnimateStats() {
+                fetch('/api/dashboard-stats/')
+                    .then(response => response.json())
+                    .then(data => {
+                        animateCounter('clientCount', data.total_clients);
+                        animateCounter('revenueCount', data.total_revenue, 2500, '', '€');
+                        animateCounter('unassignedCards', data.unassigned_cards);
+                        animateCounter('todayTransactions', data.today_transactions);
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la mise à jour:', error);
+                    });
+            }
+    
+            // Mettre à jour le statut NFC toutes les 5 secondes
+            setInterval(updateNFCStatus, 5000);
+    
+            // Mettre à jour les statistiques toutes les 60 secondes
+            setInterval(updateDashboardStats, 60000);
+    
+            // Appeler immédiatement au chargement de la page
+            updateNFCStatus();
+            updateAndAnimateStats();
+        });
+    </script>
+    <!-- Rest of your scripts... -->
+</body>
+</html>

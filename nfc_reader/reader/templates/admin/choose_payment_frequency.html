@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Choisir la Fréquence de Paiement{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6">Choisir la Fréquence de Paiement</h2>
+    <div class="bg-white p-6 rounded shadow">
+        <h3 class="text-xl font-semibold mb-4">Utilisateur : {{ user.nom }} {{ user.prenom }}</h3>
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                <label class="block mb-2">
+                    <input type="radio" name="frequency" value="monthly" class="mr-2">
+                    Mensuel
+                </label>
+                <label class="block">
+                    <input type="radio" name="frequency" value="quarterly" class="mr-2">
+                    Trimestriel
+                </label>
+            </div>
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Continuer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

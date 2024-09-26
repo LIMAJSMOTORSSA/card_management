@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Recherche d'Utilisateur{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6">Recherche d'Utilisateur</h2>
+    <form method="get" class="mb-8">
+        <div class="flex">
+            {{ form.search_query }}
+            <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Rechercher</button>
+        </div>
+    </form>
+
+    {% if users %}
+        <h3 class="text-2xl font-semibold mb-4">Résultats de la recherche :</h3>
+        <div class="space-y-4">
+            {% for user in users %}
+                <div class="bg-white p-4 rounded shadow">
+                    <h4 class="text-xl font-semibold">{{ user.nom }} {{ user.prenom }}</h4>
+                    <p class="text-gray-600">ID: {{ user.passengerid }}</p>
+                    <a href="{% url 'choose_payment_frequency' user.id %}" class="mt-2 inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Sélectionner</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% elif form.is_bound %}
+        <p class="text-gray-600">Aucun utilisateur trouvé.</p>
+    {% endif %}
+</div>
+{% endblock %}

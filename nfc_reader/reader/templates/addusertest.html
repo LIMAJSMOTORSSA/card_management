@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des abonnements - Interface administrateur</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestion des abonnements</h1>
+
+        <!-- Étape 1: Formulaire de création de compte utilisateur -->
+        <section id="creation-compte">
+            <h2>Création du compte utilisateur</h2>
+            <form id="user-form">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" required>
+                
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" required>
+                
+                <button type="button" onclick="nextStep('selection-type-utilisateur')">Suivant</button>
+            </form>
+        </section>
+
+        <!-- Étape 2: Sélection du type d'utilisateur -->
+        <section id="selection-type-utilisateur" class="hidden">
+            <h2>Sélection du type d'utilisateur</h2>
+            <select id="user-type" onchange="nextStep('choix-abonnement')">
+                <option value="">Sélectionnez un type d'utilisateur</option>
+                <option value="standard">Standard</option>
+                <option value="premium">Premium</option>
+                <option value="entreprise">Entreprise</option>
+            </select>
+        </section>
+
+        <!-- Étape 3: Choix des abonnements -->
+        <section id="choix-abonnement" class="hidden">
+            <h2>Choix des abonnements</h2>
+            <div id="abonnement-options">
+                <!-- Les options d'abonnement seront générées dynamiquement en JavaScript -->
+            </div>
+            <button onclick="nextStep('frequence-paiement')">Suivant</button>
+        </section>
+
+        <!-- Étape 4: Sélection de la fréquence de paiement -->
+        <section id="frequence-paiement" class="hidden">
+            <h2>Fréquence de paiement</h2>
+            <select id="payment-frequency">
+                <option value="mensuel">Mensuel</option>
+                <option value="trimestriel">Trimestriel</option>
+            </select>
+            <button onclick="nextStep('application-discount')">Suivant</button>
+        </section>
+
+        <!-- Étape 5: Application de discount (POS) -->
+        <section id="application-discount" class="hidden">
+            <h2>Application de réduction</h2>
+            <label for="discount-code">Code de réduction (optionnel) :</label>
+            <input type="text" id="discount-code" name="discount-code">
+            <button onclick="applyDiscount()">Appliquer</button>
+            <button onclick="nextStep('association-carte')">Suivant</button>
+        </section>
+
+        <!-- Étape 6: Association de la carte -->
+        <section id="association-carte" class="hidden">
+            <h2>Association de la carte</h2>
+            <div id="nfc-animation" style="text-align: center;">
+                <img src="/api/placeholder/200/200" alt="Animation NFC" style="width: 100px; height: 100px;">
+            </div>
+            <p>Veuillez approcher la carte NFC...</p>
+            <button onclick="simulateNFCReading()">Simuler la lecture NFC</button>
+        </section>
+
+        <!-- Étape 7: Confirmation -->
+        <section id="confirmation" class="hidden">
+            <h2>Confirmation</h2>
+            <p>Le processus s'est terminé avec succès !</p>
+            <p>Récapitulatif :</p>
+            <ul id="recap-list">
+                <!-- Le récapitulatif sera généré dynamiquement en JavaScript -->
+            </ul>
+            <button onclick="resetForm()">Nouveau compte</button>
+        </section>
+    </div>
+
+    <script>
+        function nextStep(stepId) {
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(stepId).classList.remove('hidden');
+        }
+
+        function applyDiscount() {
+            alert('Code de réduction appliqué !');
+        }
+
+        function simulateNFCReading() {
+            setTimeout(() => {
+                alert('Carte NFC lue avec succès !');
+                nextStep('confirmation');
+            }, 2000);
+        }
+
+        function resetForm() {
+            document.querySelectorAll('form').forEach(form => form.reset());
+            nextStep('creation-compte');
+        }
+
+        // Autres fonctions JavaScript pour la gestion dynamique des abonnements, etc.
+    </script>
+</body>
+</html>

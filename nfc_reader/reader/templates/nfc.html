@@ -1,0 +1,383 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Updated Driver Dashboard" name="description"/>
+    <title>NFC SCAN</title>
+    <!-- Favicon links -->
+<!-- Favicon et icônes -->
+    <link href="{% static 'favicon/apple-icon-57x57.png' %}" rel="apple-touch-icon" sizes="57x57"/>
+    <link href="{% static 'favicon/apple-icon-60x60.png' %}" rel="apple-touch-icon" sizes="60x60"/>
+    <link href="{% static 'favicon/apple-icon-72x72.png' %}" rel="apple-touch-icon" sizes="72x72"/>
+    <link href="{% static 'favicon/apple-icon-76x76.png' %}" rel="apple-touch-icon" sizes="76x76"/>
+    <link href="{% static 'favicon/apple-icon-114x114.png' %}" rel="apple-touch-icon" sizes="114x114"/>
+    <link href="{% static 'favicon/apple-icon-120x120.png' %}" rel="apple-touch-icon" sizes="120x120"/>
+    <link href="{% static 'favicon/apple-icon-144x144.png' %}" rel="apple-touch-icon" sizes="144x144"/>
+    <link href="{% static 'favicon/apple-icon-152x152.png' %}" rel="apple-touch-icon" sizes="152x152"/>
+    <link href="{% static 'favicon/apple-icon-180x180.png' %}" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="{% static 'favicon/android-icon-192x192.png' %}" rel="icon" sizes="192x192" type="image/png"/>
+    <link href="{% static 'favicon/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="{% static 'favicon/favicon-96x96.png' %}" rel="icon" sizes="96x96" type="image/png"/>
+    <link href="{% static 'favicon/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="{% static 'favicon/manifest.json' %}" rel="manifest"/>
+
+    <!-- Métadonnées -->
+    <meta content="#ffffff" name="msapplication-TileColor"/>
+    <meta content="{% static 'favicon/ms-icon-144x144.png' %}" name="msapplication-TileImage"/>
+    <meta content="#ffffff" name="theme-color"/>
+
+    <!-- Styles externes -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+    <!-- Styles internes -->
+    <link href="{% static 'css/lij.css' %}" rel="stylesheet"/>
+
+    <style>
+        .navbar-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .navbar-brand img {
+            height: 40px; /* Adjust this value to fit your logo */
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+        }
+        .footer {
+            padding: 20px 0;
+            background-color: #f8f9fa;
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .navbar {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        /* NFC Scanning Styles */
+        #nfcScannerModal .modal-dialog {
+            max-width: 400px;
+            margin: 1.75rem auto;
+        }
+        #nfcScannerModal .modal-content {
+            height: 500px;
+            border-radius: 0.3rem;
+        }
+        .nfc-icon {
+            font-size: 100px;
+            color: #007bff;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .nfc-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: #343a40;
+    transition: width 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+.sidebar-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+    </style>
+</head>
+<body>
+    <!-- Updated Side Menu -->
+    <nav class="sidebar bg-dark text-light d-flex flex-column p-3">
+        <button class="btn btn-outline-light mb-3" id="menu-toggle"><i class="fas fa-bars"></i></button>
+        <div class="sidebar-content">
+            <ul class="nav flex-column mt-4">
+            <li class="nav-item">
+                <a class="nav-link text-light" href="{% url 'home' %}">
+                    <i class="fas fa-home"></i><span class="menu-text"> Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a aria-expanded="false" class="nav-link text-light" data-bs-target="#testSubmenu" data-bs-toggle="collapse" href="#">
+                    <i class="fas fa-vial"></i><span class="menu-text"> Test</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
+                </a>
+                <ul class="collapse nav flex-column ms-3" id="testSubmenu">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'test_ecriture' %}">
+                            <i class="fas fa-pen"></i><span class="menu-text"> Test Écriture</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'test_lecture' %}">
+                            <i class="fas fa-book-reader"></i><span class="menu-text"> Test Lecture</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'test_transaction' %}">
+                            <i class="fas fa-exchange-alt"></i><span class="menu-text"> Test Transaction</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="{% url 'add_user' %}">
+                    <i class="fas fa-user-plus"></i><span class="menu-text"> Add User</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a aria-expanded="false" class="nav-link text-light" data-bs-target="#scanSubmenu" data-bs-toggle="collapse" href="#">
+                    <i class="fas fa-qrcode"></i><span class="menu-text"> Scan</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
+                </a>
+                <ul class="collapse nav flex-column ms-3" id="scanSubmenu">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'qr_code' %}">
+                            <i class="fas fa-qrcode"></i><span class="menu-text"> QR Code</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'nfc' %}">
+                            <i class="fas fa-wifi"></i><span class="menu-text"> NFC</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+           
+           
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Updated Top Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button class="btn btn-outline-secondary d-lg-none" id="menu-toggle-top">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <!-- App Logo -->
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'img/logo.png' %}" alt="Logo" />
+                </a>
+                <div class="ms-auto">
+                    <div class="dropdown">
+                        <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileDropdown" role="button">
+                            <i class="fas fa-user-circle"></i>
+                        </a>
+                        <ul aria-labelledby="profileDropdown" class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    
+        <!-- Content -->
+        <div class="container mt-4">
+            <div class="nfc-container">
+                <h1 class="mb-4">NFC Scanning</h1>
+                <p>Click the button below to start NFC scanning.</p>
+                <button id="startNfcScan" class="btn btn-primary">Start NFC Scan</button>
+            </div>
+        </div>
+    
+        <!-- NFC Scanner Modal -->
+        <div class="modal fade" id="nfcScannerModal" tabindex="-1" aria-labelledby="nfcScannerModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="nfcScannerModalLabel">NFC Scan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body position-relative">
+                        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                            <i class="fas fa-wifi nfc-icon mb-3"></i>
+                            <p class="text-center">Please approach the NFC card to the reader</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- User Info Modal -->
+        <div class="modal fade" id="userInfoModal" tabindex="-1" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userInfoModalLabel">User Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center mb-3">
+                            <img id="userProfilePic" src="{% static 'img/default_profile.jpg' %}" alt="User Profile" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                        </div>
+                        <h3 class="text-center mb-4" id="cardOwnerName"></h3>
+                        <p><strong>Passenger ID:</strong> <span id="passengerId"></span></p>
+                        <p><strong>Name:</strong> <span id="userName"></span></p>
+                        <p><strong>Surname:</strong> <span id="userSurname"></span></p>
+                        <p><strong>User Type:</strong> <span id="userType"></span></p>
+                        <p><strong>Account Status:</strong> <span id="accountStatus"></span></p>
+                        <div id="subscriptionInfo"></div>
+                        <input type="hidden" id="cardUid">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="disapproveButton">Disapprove</button>
+                        <button type="button" class="btn btn-success" id="approveButton">Approve</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center mt-auto">
+        <div class="container">
+            <p class="mb-0">© 2024 LIMAJS MOTORS SA. Tous droits réservés.</p>
+            <p class="mb-0">Powered by Busko</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/lij.js' %}"></script>
+   <!-- ... (gardez la plupart du code HTML tel quel) ... -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const startNfcScanButton = document.getElementById('startNfcScan');
+    const nfcScannerModal = new bootstrap.Modal(document.getElementById('nfcScannerModal'));
+    const userInfoModal = new bootstrap.Modal(document.getElementById('userInfoModal'));
+    
+    startNfcScanButton.addEventListener('click', () => {
+        nfcScannerModal.show();
+        startNfcScan();
+    });
+
+    function startNfcScan() {
+        fetch('{% url "process_nfc_scan" %}')
+            .then(response => response.json())
+            .then(data => {
+                nfcScannerModal.hide();
+                if (data.success) {
+                    showUserInfo(data);
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                nfcScannerModal.hide();
+                alert('An error occurred while scanning the NFC card.');
+            });
+    }
+
+    function showUserInfo(userData) {
+        document.getElementById('cardOwnerName').textContent = userData.full_name;
+        document.getElementById('passengerId').textContent = userData.passenger_id;
+        document.getElementById('userName').textContent = userData.name;
+        document.getElementById('userSurname').textContent = userData.surname;
+        document.getElementById('userType').textContent = userData.user_type;
+        document.getElementById('accountStatus').textContent = userData.account_status;
+        document.getElementById('cardUid').value = userData.card_uid;
+
+        const subscriptionInfoDiv = document.getElementById('subscriptionInfo');
+        subscriptionInfoDiv.innerHTML = '<h4>Subscriptions:</h4>';
+        userData.subscriptions.forEach((sub, index) => {
+            subscriptionInfoDiv.innerHTML += `
+                <div class="subscription-item">
+                    <h5>Subscription ${index + 1}</h5>
+                    <p><strong>Type:</strong> ${sub.type}</p>
+                    <p><strong>Locality:</strong> ${sub.locality}</p>
+                    <p><strong>Circuit:</strong> ${sub.circuit}</p>
+                    <p><strong>Duration:</strong> ${sub.duration}</p>
+                    <p><strong>Expiration Date:</strong> ${sub.expiration_date}</p>
+                </div>
+            `;
+        });
+
+        userInfoModal.show();
+    }
+
+    document.getElementById('approveButton').addEventListener('click', () => approveBoarding(true));
+    document.getElementById('disapproveButton').addEventListener('click', () => approveBoarding(false));
+
+    function approveBoarding(isApproved) {
+        const cardUid = document.getElementById('cardUid').value;
+        const formData = new FormData();
+        formData.append('card_uid', cardUid);
+        formData.append('is_approved', isApproved);
+        formData.append('location', 'Current Location'); // You might want to get this dynamically
+
+        fetch('{% url "approve_boarding" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(isApproved ? 'Boarding approved' : 'Boarding disapproved');
+            } else {
+                alert('Error: ' + data.error);
+            }
+            userInfoModal.hide();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while processing the boarding approval.');
+        });
+    }
+});
+</script>
+</body>
+</html>

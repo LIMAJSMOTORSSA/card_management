@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - LIMAJS MOTORS S.A.</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    .input-container {
+      position: relative;
+    }
+    .input-icon {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: #9CA3AF;
+    }
+    .password-icon {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      color: #9CA3AF;
+      cursor: pointer;
+    }
+    input {
+      padding-left: 40px;
+    }
+    input[type="password"] {
+      padding-right: 40px;
+    }
+    input:focus {
+      border-color: #2563EB;
+      outline: none;
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.3);
+    }
+    .bg-white {
+      transition: transform 0.3s ease-in-out;
+    }
+    .bg-white:hover {
+      transform: scale(1.02);
+    }
+    .logo-container {
+        text-align: center;
+        margin-bottom: 20px;
+        transform: translateX(125px); /* Déplace le logo de 50px vers la droite */
+    }
+
+    .logo-container img {
+      width: 120px;
+      height: 120px;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-r from-blue-900 to-gray-900 min-h-screen flex items-center justify-center">
+  <div class="bg-white p-10 rounded-lg shadow-2xl w-full max-w-md">
+    <div class="logo-container">
+      <img src="logo_finale_nofont.png" alt="Logo LIMAJS MOTORS S.A.">
+    </div>
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-800">LIMAJS MOTORS S.A.</h1>
+      <p class="text-lg text-gray-600 mt-2">Dashboard de gestion des cartes NFC</p>
+    </div>
+    <h2 class="text-2xl font-semibold mb-6 text-center">Connexion</h2>
+    <form>
+      <div class="input-container mb-6">
+        
+        <input type="email" class="border border-gray-300 p-3 w-full rounded-lg focus:ring focus:ring-blue-200" placeholder="Adresse email" required>
+      </div>
+      <div class="input-container mb-6">
+        
+        <input type="password" id="password" class="border border-gray-300 p-3 w-full rounded-lg focus:ring focus:ring-blue-200" placeholder="Mot de passe" required>
+        <i class="fas fa-eye password-icon" id="togglePassword"></i>
+      </div>
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 w-full rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+        Se connecter
+      </button>
+    </form>
+   
+  </div>
+
+  <script>
+    // Animation d'entrée GSAP pour un effet plus fluide et interactif
+    gsap.from('.bg-white', { opacity: 0, scale: 0.8, duration: 1, ease: 'power3.out' });
+
+    // Ajout d'animation au survol des champs de formulaire
+    document.querySelectorAll('input').forEach((input) => {
+      input.addEventListener('focus', () => {
+        gsap.to(input, { boxShadow: "0 0 10px rgba(37, 99, 235, 0.5)", duration: 0.3 });
+      });
+      input.addEventListener('blur', () => {
+        gsap.to(input, { boxShadow: "none", duration: 0.3 });
+      });
+    });
+
+    // Fonctionnalité d'affichage/masquage du mot de passe
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    
+    togglePassword.addEventListener('click', function (e) {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      this.classList.toggle('fa-eye-slash');
+    });
+  </script>
+</body>
+</html>

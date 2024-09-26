@@ -1,0 +1,62 @@
+# .gitignore pour un projet Django
+
+# Les fichiers de configuration Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.pvm
+
+# Environnement virtuel (incluant votre nom d'environnement virtuel)
+env/
+venv/
+ENV/
+venv.bak/
+.virtualenv/
+nom_de_lenv/
+
+# Paramètres IDEs/éditeurs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Fichiers de logs
+*.log
+
+# Configurations et bases de données locales
+db.sqlite3
+db.sqlite3-journal
+
+# Fichiers de configuration ou secrets
+.env
+*.env
+
+# Dossiers de fichiers statiques générés
+
+# Fichiers de migrations
+*/migrations/*.pyc
+*/migrations/__pycache__/
+
+# Fichiers créés par certains modules comme coverage.py
+.coverage
+*.cover
+*.coverage.*
+
+# Les rapports d'analyse de test
+htmlcov/
+covxml.xml
+
+# La documentation générée automatiquement
+docs/_build/
+
+# Le fichier de clé secrète généré par Django (si vous en avez un)
+secret_key.txt
+
+# Dossiers ou fichiers des paquets npm (si vous utilisez npm pour gérer le JS/CSS)
+node_modules/
+
+# Django cache files
+*.cache
+key.py
+password.py

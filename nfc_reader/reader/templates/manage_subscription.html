@@ -1,0 +1,31 @@
+
+<h2>Créer un Abonnement</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="passenger_id">Identifiant Passager :</label>
+    <input type="text" name="passenger_id" required><br>
+
+    <label for="frequency">Fréquence :</label>
+    <select name="frequency">
+        <option value="monthly">Mensuel</option>
+        <option value="quarterly">Trimestriel</option>
+    </select><br>
+
+    <label for="discount">Remise (%) :</label>
+    <input type="number" name="discount" min="0" max="100" step="0.01"><br>
+
+    <label for="payment_method">Méthode de Paiement :</label>
+    <select name="payment_method">
+        <option value="cash">Cash</option>
+        <option value="moncash">MonCash Digicel</option>
+        <option value="natcash">NatCash Natcom</option>
+        <option value="credit_card">Carte de Crédit/Débit</option>
+    </select><br>
+
+    <label for="plan_ids">Sélectionnez les Plans :</label><br>
+    {% for plan in subscription_plans %}
+        <input type="checkbox" name="plan_ids" value="{{ plan.id }}"> {{ plan }}<br>
+    {% endfor %}
+    
+    <button type="submit">Créer Abonnement</button>
+</form>

@@ -1,0 +1,192 @@
+/* General Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #343a40;
+    transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.nav-link {
+    font-size: 1.1em;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.nav-link i {
+    margin-right: 10px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #007bff;
+}
+
+.nav-link:hover i {
+    transform: scale(1.2);
+    color: #007bff;
+}
+
+.menu-text {
+    transition: opacity 0.3s ease;
+}
+
+.menu-text.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.main-content {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+    padding-top: 60px; /* Ensure the content starts below the top bar */
+}
+
+.main-content.expanded {
+    margin-left: 80px;
+}
+
+/* Top Bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 250px;
+    width: calc(100% - 250px);
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: left 0.3s ease, width 0.3s ease;
+    padding: 10px;
+}
+
+.navbar.expanded {
+    left: 80px;
+    width: calc(100% - 80px);
+}
+
+.navbar .nav-link i {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.navbar .nav-link:hover i {
+    transform: scale(1.2);
+    color: #007bff;
+}
+
+/* Card Effects */
+.card {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Virtual Card Hover Effect */
+#virtualCard {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#virtualCard:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Buttons Hover Effect */
+.btn {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+    background-color: #007bff;
+}
+
+.btn-success:hover {
+    background-color: #28a745;
+    transform: scale(1.1);
+}
+
+/* Modal */
+.modal-content {
+    border-radius: 10px;
+}
+
+/* Navigation Submenu Styles */
+.nav-link .fa-chevron-down {
+    transition: transform 0.3s ease;
+}
+
+.nav-link[aria-expanded="true"] .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+#navigationSubmenu {
+    padding-left: 20px;
+    transition: height 0.3s ease, opacity 0.3s ease;
+}
+
+#navigationSubmenu .nav-link {
+    font-size: 0.9em;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#navigationSubmenu.show .nav-link {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sidebar.collapsed #navigationSubmenu {
+    padding-left: 0;
+}
+
+.sidebar.collapsed #navigationSubmenu .nav-link {
+    padding-left: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100px;
+    }
+    .main-content {
+        margin-left: 100px;
+    }
+    .navbar {
+        left: 100px;
+        width: calc(100% - 100px);
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        width: 80px;
+    }
+    .main-content {
+        margin-left: 80px;
+    }
+    .navbar {
+        left: 80px;
+        width: calc(100% - 80px);
+    }
+}

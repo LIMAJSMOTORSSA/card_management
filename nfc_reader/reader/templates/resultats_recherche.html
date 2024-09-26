@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-gray-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats de recherche</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-full">
+    <div class="min-h-full">
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <h1 class="text-3xl font-bold text-gray-900">
+                    Résultats de recherche
+                </h1>
+            </div>
+        </header>
+        <main>
+            <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                <div class="px-4 py-6 sm:px-0">
+                    <div class="border-4 border-dashed border-gray-200 rounded-lg h-96 overflow-auto">
+                        <ul class="divide-y divide-gray-200">
+                            {% for utilisateur in utilisateurs %}
+                                <li class="px-4 py-4 sm:px-6">
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm font-medium text-indigo-600 truncate">
+                                            {{ utilisateur.nom }} {{ utilisateur.prenom }}
+                                        </p>
+                                        <div class="ml-2 flex-shrink-0 flex">
+                                            <a href="{% url 'selection_card' utilisateur.id %}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                Sélectionner
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 sm:flex sm:justify-between">
+                                        <div class="sm:flex">
+                                            <p class="flex items-center text-sm text-gray-500">
+                                                ID: {{ utilisateur.passengerid }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% empty %}
+                                <li class="px-4 py-4 sm:px-6">
+                                    <p class="text-sm text-gray-500">Aucun utilisateur trouvé</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Updated Driver Dashboard">
+    <title>Home</title>
+
+    <!-- Favicon links -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lij.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .navbar-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .navbar-brand img {
+            height: 40px; /* Adjust this value to fit your logo */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Updated Side Menu -->
+    <nav class="sidebar bg-dark text-light d-flex flex-column p-3">
+        <button class="btn btn-outline-light mb-3" id="menu-toggle"><i class="fas fa-bars"></i></button>
+        <div class="sidebar-content">
+            <ul class="nav flex-column mt-4">
+            <li class="nav-item">
+                <a class="nav-link text-light" href="home.html"><i class="fas fa-home"></i><span class="menu-text"> Home</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="#" data-bs-toggle="collapse" data-bs-target="#testSubmenu" aria-expanded="false">
+                    <i class="fas fa-vial"></i><span class="menu-text"> Test</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
+                </a>
+                <ul class="collapse nav flex-column ms-3" id="testSubmenu">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="test_ecriture.html"><i class="fas fa-pen"></i><span class="menu-text"> Test Écriture</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="test_lecture.html"><i class="fas fa-book-reader"></i><span class="menu-text"> Test Lecture</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="test_transaction.html"><i class="fas fa-exchange-alt"></i><span class="menu-text"> Test Transaction</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="add_user.html"><i class="fas fa-user-plus"></i><span class="menu-text"> Add User</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="#" data-bs-toggle="collapse" data-bs-target="#scanSubmenu" aria-expanded="false">
+                    <i class="fas fa-qrcode"></i><span class="menu-text"> Scan</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
+                </a>
+                <ul class="collapse nav flex-column ms-3" id="scanSubmenu">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="qr_code.html"><i class="fas fa-qrcode"></i><span class="menu-text"> QR Code</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="nfc.html"><i class="fas fa-wifi"></i><span class="menu-text"> NFC</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="#" data-bs-toggle="collapse" data-bs-target="#databaseSubmenu" aria-expanded="false">
+                    <i class="fas fa-database"></i><span class="menu-text"> Database</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
+                </a>
+                <ul class="collapse nav flex-column ms-3" id="databaseSubmenu">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="user_database.html"><i class="fas fa-users"></i><span class="menu-text"> User Database</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="user_systeme.html"><i class="fas fa-user-cog"></i><span class="menu-text"> User System</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="card_info.html"><i class="fas fa-id-card"></i><span class="menu-text"> Card Info</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="transaction_database.html"><i class="fas fa-money-check-alt"></i><span class="menu-text"> Transaction Database</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="passenger_card_database.html"><i class="fas fa-address-card"></i><span class="menu-text"> Passenger Card Database</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="subscription.html"><i class="fas fa-ticket-alt"></i><span class="menu-text"> Subscription</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="#" data-bs-toggle="collapse" data-bs-target="#carteConfigSubmenu" aria-expanded="false">
+                    <i class="fas fa-cog"></i><span class="menu-text"> Carte Config</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
+                </a>
+                <ul class="collapse nav flex-column ms-3" id="carteConfigSubmenu">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="change_security_key.html"><i class="fas fa-key"></i><span class="menu-text"> Change Security Key</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="card_list.html"><i class="fas fa-list"></i><span class="menu-text"> Card List</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="add_card.html"><i class="fas fa-plus-circle"></i><span class="menu-text"> Add Card</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="format_card.html"><i class="fas fa-eraser"></i><span class="menu-text"> Format Card</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Updated Top Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button id="menu-toggle-top" class="btn btn-outline-secondary d-lg-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- App Logo -->
+                <a class="navbar-brand" href="#">
+                    <img src="limajs.png" alt="App Logo">
+                </a>
+
+                <div class="ms-auto">
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Rest of the content... -->
+        <!-- You can add your main content here -->
+
+    </div>
+
+    <!-- Bootstrap & Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lij.js"></script>
+    <!-- Rest of your scripts... -->
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-gray-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attribution de carte</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="h-full">
+    <div class="min-h-full">
+        <nav class="bg-indigo-600">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <img class="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-300.svg" alt="Workflow">
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="ml-10 flex items-baseline space-x-4">
+                                <a href="#" class="bg-indigo-700 text-white px-3 py-2 rounded-md text-sm font-medium">Attribution de carte</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <h1 class="text-3xl font-bold text-gray-900">Attribution de carte</h1>
+            </div>
+        </header>
+
+        <main>
+            <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                <div class="px-4 py-6 sm:px-0">
+                    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                        <div class="px-4 py-5 sm:px-6">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Informations de l'utilisateur</h3>
+                        </div>
+                        <div class="border-t border-gray-200">
+                            <dl>
+                                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">Nom complet</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ user.nom }} {{ user.prenom }}</dd>
+                                </div>
+                                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">ID</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ user.passengerid }}</dd>
+                                </div>
+                                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">Type</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ user.get_type_utilisateur_display }}</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 sm:mt-0">
+                        <div class="md:grid md:grid-cols-3 md:gap-6">
+                            <div class="md:col-span-1">
+                                <div class="px-4 sm:px-0">
+                                    <h3 class="text-lg font-medium leading-6 text-gray-900">Attribution de la carte</h3>
+                                    <p class="mt-1 text-sm text-gray-600">Choisissez un CardAssignmentID pour attribuer une carte à cet utilisateur.</p>
+                                </div>
+                            </div>
+                            <div class="mt-5 md:mt-0 md:col-span-2">
+                                <form action="{% url 'create_card' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                                    <div class="shadow overflow-hidden sm:rounded-md">
+                                        <div class="px-4 py-5 bg-white sm:p-6">
+                                            <div x-data="{ assignments: [], loading: true }">
+                                                <label for="cardAssignment" class="block text-sm font-medium text-gray-700">Choisir un CardAssignmentID</label>
+                                                <select id="cardAssignment" name="assignment_id" required
+                                                        x-init="fetch(`/api/get-card-assignments/?user_id={{ user.id }}`)
+                                                                .then(response => response.json())
+                                                                .then(data => { assignments = data; loading = false; })"
+                                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                    <option value="">Sélectionnez un CardAssignmentID</option>
+                                                    <template x-for="assignment in assignments" :key="assignment.id">
+                                                        <option :value="assignment.id" x-text="assignment.unique_code"></option>
+                                                    </template>
+                                                </select>
+                                                <div x-show="loading" class="mt-2 text-sm text-gray-500">
+                                                    <i class="fas fa-spinner fa-spin"></i> Chargement des CardAssignmentID...
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                                            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                Attribuer la carte
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

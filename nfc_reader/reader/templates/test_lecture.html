@@ -1,0 +1,370 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Updated Driver Dashboard" name="description"/>
+    <title>Test lecture</title>
+    <!-- Favicon links -->
+    <!-- Favicon et icônes -->
+    <link href="{% static 'favicon/apple-icon-57x57.png' %}" rel="apple-touch-icon" sizes="57x57"/>
+    <link href="{% static 'favicon/apple-icon-60x60.png' %}" rel="apple-touch-icon" sizes="60x60"/>
+    <link href="{% static 'favicon/apple-icon-72x72.png' %}" rel="apple-touch-icon" sizes="72x72"/>
+    <link href="{% static 'favicon/apple-icon-76x76.png' %}" rel="apple-touch-icon" sizes="76x76"/>
+    <link href="{% static 'favicon/apple-icon-114x114.png' %}" rel="apple-touch-icon" sizes="114x114"/>
+    <link href="{% static 'favicon/apple-icon-120x120.png' %}" rel="apple-touch-icon" sizes="120x120"/>
+    <link href="{% static 'favicon/apple-icon-144x144.png' %}" rel="apple-touch-icon" sizes="144x144"/>
+    <link href="{% static 'favicon/apple-icon-152x152.png' %}" rel="apple-touch-icon" sizes="152x152"/>
+    <link href="{% static 'favicon/apple-icon-180x180.png' %}" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="{% static 'favicon/android-icon-192x192.png' %}" rel="icon" sizes="192x192" type="image/png"/>
+    <link href="{% static 'favicon/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="{% static 'favicon/favicon-96x96.png' %}" rel="icon" sizes="96x96" type="image/png"/>
+    <link href="{% static 'favicon/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="{% static 'favicon/manifest.json' %}" rel="manifest"/>
+
+    <!-- Métadonnées -->
+    <meta content="#ffffff" name="msapplication-TileColor"/>
+    <meta content="{% static 'favicon/ms-icon-144x144.png' %}" name="msapplication-TileImage"/>
+    <meta content="#ffffff" name="theme-color"/>
+
+    <!-- Styles externes -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+    <!-- Styles internes -->
+    <link href="{% static 'css/lij.css' %}" rel="stylesheet"/>
+
+    <style>
+        .navbar-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .navbar-brand img {
+            height: 40px; /* Adjust this value to fit your logo */
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+        }
+        .footer {
+            padding: 20px 0;
+            background-color: #f8f9fa;
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .navbar {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .read-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+        }
+        .nfc-animation {
+            width: 200px;
+            height: 200px;
+            background: url('nfc-icon.png') no-repeat center center;
+            background-size: contain;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .loading-text {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        .modal-content {
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        .modal-body {
+            padding: 2rem;
+        }
+        .card-data {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .card-data h5 {
+            color: #007bff;
+            margin-bottom: 0.5rem;
+        }
+        .btn-close-modal {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .btn-close-modal:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .read-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 56px - 76px); /* Ajuster en fonction de la hauteur de votre navbar et footer */
+            padding: 20px;
+        }
+        .nfc-animation {
+            font-size: 100px;
+            color: #007bff;
+            animation: nfcPulse 2s infinite;
+        }
+        @keyframes nfcPulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .loading-text {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Updated Side Menu -->
+    <nav class="sidebar bg-dark text-light d-flex flex-column p-3">
+        <button class="btn btn-outline-light mb-3" id="menu-toggle"><i class="fas fa-bars"></i></button>
+        <div class="sidebar-content">
+            <ul class="nav flex-column mt-4">
+            <li class="nav-item">
+                <a class="nav-link text-light" href="{% url 'home' %}">
+                    <i class="fas fa-home"></i><span class="menu-text"> Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a aria-expanded="false" class="nav-link text-light" data-bs-target="#testSubmenu" data-bs-toggle="collapse" href="#">
+                    <i class="fas fa-vial"></i><span class="menu-text"> Test</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
+                </a>
+                <ul class="collapse nav flex-column ms-3" id="testSubmenu">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'test_ecriture' %}">
+                            <i class="fas fa-pen"></i><span class="menu-text"> Test Écriture</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'test_lecture' %}">
+                            <i class="fas fa-book-reader"></i><span class="menu-text"> Test Lecture</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'test_transaction' %}">
+                            <i class="fas fa-exchange-alt"></i><span class="menu-text"> Test Transaction</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="{% url 'add_user' %}">
+                    <i class="fas fa-user-plus"></i><span class="menu-text"> Add User</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a aria-expanded="false" class="nav-link text-light" data-bs-target="#scanSubmenu" data-bs-toggle="collapse" href="#">
+                    <i class="fas fa-qrcode"></i><span class="menu-text"> Scan</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
+                </a>
+                <ul class="collapse nav flex-column ms-3" id="scanSubmenu">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'qr_code' %}">
+                            <i class="fas fa-qrcode"></i><span class="menu-text"> QR Code</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'nfc' %}">
+                            <i class="fas fa-wifi"></i><span class="menu-text"> NFC</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+           
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Updated Top Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button class="btn btn-outline-secondary d-lg-none" id="menu-toggle-top">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <!-- App Logo -->
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'img/logo.png' %}" alt="Logo" />
+                </a>
+                <div class="ms-auto">
+                    <div class="dropdown">
+                        <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="profileDropdown" role="button">
+                            <i class="fas fa-user-circle"></i>
+                        </a>
+                        <ul aria-labelledby="profileDropdown" class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+       
+
+        <div class="read-container">
+            <div class="nfc-animation">
+                <i class="fas fa-wifi"></i> <!-- Icône Wi-Fi pour représenter NFC -->
+            </div>
+            <p class="loading-text">Veuillez placer votre carte sur le lecteur NFC...</p>
+        </div>
+
+        <!-- Modal pour afficher les données de la carte -->
+        <div class="modal fade" id="cardDataModal" tabindex="-1" aria-labelledby="cardDataModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cardDataModalLabel">Données de la Carte</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-data">
+                            <h5>ID de la Carte</h5>
+                            <p id="cardId">{{ card_data.uid|default:"Non disponible" }}</p>
+                        </div>
+                        <div class="card-data">
+                            <h5>ATR</h5>
+                            <p id="cardAtr">{{ card_data.atr|default:"Non disponible" }}</p>
+                        </div>
+                        {% for sector, data in card_data.sectors.items %}
+                            <div class="card-data">
+                                <h5>Secteur {{ sector }}</h5>
+                                {% for block, block_data in data.items %}
+                                    <p><strong>Bloc {{ block }}:</strong></p>
+                                    <p>ASCII: {{ block_data.ascii }}</p>
+                                    <p>HEX: {{ block_data.hex }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-close-modal" data-bs-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center mt-auto">
+        <div class="container">
+            <p class="mb-0">© 2024 LIMAJS MOTORS SA. Tous droits réservés.</p>
+            <p class="mb-0">Powered by Busko</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/lij.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingText = document.querySelector('.loading-text');
+            const cardDataModal = new bootstrap.Modal(document.getElementById('cardDataModal'));
+        
+            {% if error %}
+                loadingText.textContent = "{{ error }}";
+            {% elif card_data %}
+                loadingText.textContent = "Carte détectée ! Affichage des données...";
+                cardDataModal.show();
+            {% else %}
+                // Commencer à écouter les cartes NFC
+                pollForCard();
+            {% endif %}
+        
+            function pollForCard() {
+                fetch('{% url "test_lecture" %}')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            loadingText.textContent = data.error;
+                            setTimeout(pollForCard, 1000);  // Réessayer après 1 seconde
+                        } else if (data.card_data) {
+                            loadingText.textContent = "Carte détectée ! Affichage des données...";
+                            updateModalContent(data.card_data);
+                            cardDataModal.show();
+                            setTimeout(() => {
+                                loadingText.textContent = "Veuillez placer votre carte sur le lecteur NFC...";
+                                pollForCard();  // Recommencer à écouter après avoir affiché les données
+                            }, 3000);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                        loadingText.textContent = "Une erreur est survenue. Veuillez réessayer.";
+                        setTimeout(pollForCard, 1000);
+                    });
+            }
+        
+            function updateModalContent(cardData) {
+                document.getElementById('cardId').textContent = cardData.uid || "Non disponible";
+                document.getElementById('cardAtr').textContent = cardData.atr || "Non disponible";
+                
+                const modalBody = document.querySelector('#cardDataModal .modal-body');
+                modalBody.innerHTML = ''; // Nettoyer le contenu existant
+                
+                // Ajouter UID et ATR
+                modalBody.innerHTML += `
+                    <div class="card-data">
+                        <h5>ID de la Carte</h5>
+                        <p>${cardData.uid || "Non disponible"}</p>
+                    </div>
+                    <div class="card-data">
+                        <h5>ATR</h5>
+                        <p>${cardData.atr || "Non disponible"}</p>
+                    </div>
+                `;
+                
+                // Ajouter les données des secteurs
+                for (const [sector, data] of Object.entries(cardData.sectors)) {
+                    let sectorHtml = `<div class="card-data"><h5>Secteur ${sector}</h5>`;
+                    for (const [block, blockData] of Object.entries(data)) {
+                        sectorHtml += `
+                            <p><strong>Bloc ${block}:</strong></p>
+                            <p>ASCII: ${blockData.ascii}</p>
+                            <p>HEX: ${blockData.hex}</p>
+                        `;
+                    }
+                    sectorHtml += '</div>';
+                    modalBody.innerHTML += sectorHtml;
+                }
+            }
+        });
+    </script>
+    <!-- Rest of your scripts... -->
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-gray-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erreur de création de carte</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="h-full">
+    <div class="min-h-full">
+        <nav class="bg-indigo-600">
+            <!-- ... (votre code de navigation) ... -->
+        </nav>
+
+        <main>
+            <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                <div class="px-4 py-6 sm:px-0">
+                    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" class="rounded-md bg-red-50 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-exclamation-circle text-red-400"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-red-800">
+                                    Erreur de création de carte
+                                </h3>
+                                <div class="mt-2 text-sm text-red-700">
+                                    <p>{{ error }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ajoutez ici le contenu principal de votre page -->
+                    <div class="mt-8">
+                        <h2 class="text-2xl font-bold text-gray-900">Détails de l'erreur</h2>
+                        <p class="mt-4 text-gray-600">
+                            Une erreur s'est produite lors de la création de la carte. Veuillez réessayer ou contacter l'administrateur système si le problème persiste.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
